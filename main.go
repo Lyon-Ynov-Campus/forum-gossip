@@ -1,15 +1,7 @@
 package main
 
-import (
-	"log"
-	"net/http"
-)
+import forum "forum-gossip/src"
 
 func main() {
-	home := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	})
-
-	http.HandleFunc("/", home)
-	log.Fatal(http.ListenAndServe(":8080", nil))
-
+	forum.Server()
 }
