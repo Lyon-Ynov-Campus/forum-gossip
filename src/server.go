@@ -15,6 +15,7 @@ func SetDb(database *sql.DB) {
 func Server() {
 
 	http.HandleFunc("/", Home)
+	http.HandleFunc("/login", Login)
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
