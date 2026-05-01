@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    gap: 40px;
+}
+
+.logo {
+    background-color: #ff2d87;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: 900;
+    padding: 15px 40px;
+    box-shadow: 0 0 30px #ff2d87, 0 0 60px #ff2d87;
+}
+
+.card {
+    background-color: #111;
+    border: 2px solid #7fff00;
+    box-shadow: 0 0 20px #7fff00, 0 0 40px #7fff00;
+    padding: 50px 60px;
+    width: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icon {
+    background-color: #ff2d87;
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 12px 16px;
+    transform: rotate(45deg);
+    display: inline-block;
+}
+
+.icon span {
+    display: inline-block;
+    transform: rotate(-45deg);
+}
+
+.card-title h2 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.card form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card input {
+    background-color: white;
+    border: none;
+    padding: 18px 20px;
+    font-size: 1rem;
+    color: #555;
+    outline: none;
+    width: 100%;
+}
+
+.card button {
+    background-color: #7fff00;
+    color: black;
+    border: none;
+    padding: 18px;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 50px;
+    margin-top: 10px;
+}
+
+.card button:hover {
+    background-color: #aaff33;
+}
+
+.create {
+    color: #7fff00;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.create:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: #ff2d87;
+    font-weight: bold;
+}
