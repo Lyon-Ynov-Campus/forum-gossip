@@ -9,7 +9,7 @@ SELECT * FROM users WHERE id= $1;
 insert into users (email, username, password) values ($1, $2, $3);
 SELECT id, email, username, password FROM users WHERE email = $1;
 select id, email, username, password from users;
-
+insert into users (email, username, password) values ('kk@123.com', 'pop', 'azerty');
 
 
 /*

@@ -1,11 +1,19 @@
 package src
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 )
 
+var db *sql.DB
+
+func SetDb(database *sql.DB) {
+	db = database
+}
+
 func Server() {
+
 	http.HandleFunc("/", Home)
 
 	fs := http.FileServer(http.Dir("static"))
