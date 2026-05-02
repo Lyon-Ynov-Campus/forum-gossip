@@ -17,6 +17,7 @@ func Server() {
 	http.HandleFunc("/", Home)
 	http.HandleFunc("/login", Login)
 	http.HandleFunc("/logout", Logout)
+	http.HandleFunc("/delete-account", DeleteAccount)
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
