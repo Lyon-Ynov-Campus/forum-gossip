@@ -9,7 +9,7 @@ import (
 var sessions = map[string]int{}
 
 func addSession(w http.ResponseWriter, userID int) {
-	token := fmt.Sprintf("%d-%d", userID, rand.Int())
+	token := fmt.Sprint(rand.Int())
 	sessions[token] = userID
 
 	http.SetCookie(w, &http.Cookie{
@@ -24,7 +24,6 @@ func getUser(r *http.Request) int {
 	if err != nil {
 		return 0
 	}
-
 	id, ok := sessions[c.Value]
 	if !ok {
 		return 0
