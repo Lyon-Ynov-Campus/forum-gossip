@@ -1,5 +1,6 @@
 package src
 
+/*
 import (
 	"html/template"
 	"log"
@@ -14,20 +15,24 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		Password string
 	}
 
-	register := UserRegister{
+	if req.Method == http.MethodPost {
+	rv := &validators.RegisterValidator{
 		Username: r.FormValue("username"),
 		Email:    r.FormValue("email"),
 		Avatar:   r.FormValue("avatar"),
-		Password: r.FormValue("password"),
+		Password1: r.FormValue("password2"),
+		Password2: r.FormValue("password1"),
+	}
 	}
 
+	+
 	if string.TrimSpace(register.Username) == "" {
 		rv.Error["Username"] = "Le nom ne peut pas etre vide"
 	}
 	if string.TrimSpace(register.Email) == "" {
 		rv.Error["Email"] = "L'email ne peut pas etre vide"
 	}
-	if string.TrimSpace(register.Password) == "" {
+	if string.TrimSpace(rv.Password) == "" {
 		rv.Error["Password"] = "Le mot de passe ne peut pas etre vide"
 	}
 
@@ -39,3 +44,4 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 
 }
+*/
