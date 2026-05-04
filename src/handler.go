@@ -7,11 +7,10 @@ import (
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
-<<<<<<< HEAD
-=======
+
 	id := getUser(r)
 	msg := r.URL.Query().Get("msg")
->>>>>>> 293899e21614191b6f56257d5c90588570820b9e
+
 	tmpl, err := template.ParseFiles("templates/pageAccueil.html")
 	if err != nil {
 		log.Fatal(err)
