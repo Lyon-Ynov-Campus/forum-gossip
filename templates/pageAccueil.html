@@ -9,12 +9,15 @@
     <h1>PageAccueil </h1>
 
 
-    {{if .}}
+    {{if .UserID}}
         <p>Connecté</p>
+        <a href="/profil">
+            <button>Mon profil</button>
+        </a>
     {{else}}
-     <a href="/login">
-        <button>->] CONNEXION</button>
-    </a>
-    {{end}}
+        <a href="/login">
+            <button>->] CONNEXION</button>
+        </a>
+{{end}}
 </body>
 </html>
