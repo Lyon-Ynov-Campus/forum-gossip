@@ -15,9 +15,10 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	var user struct {
 		Username string
 		Email    string
+		Avatar   string
 	}
 	err := db.QueryRow(
-		"SELECT username, email FROM users WHERE id = ?", id).Scan(&user.Username, &user.Email)
+		"SELECT username, email, avatar FROM users WHERE id = ?", id).Scan(&user.Username, &user.Email, &user.Avatar)
 	if err != nil {
 		http.Error(w, "Erreur récupération user", 500)
 		return

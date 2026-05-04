@@ -14,10 +14,25 @@
         <a href="/profil">
             <button>Mon profil</button>
         </a>
+        {{range .Users}}
+        <div>
+
+            {{if .Avatar}}
+                <img src="{{.Avatar}}" width="50">
+            {{else}}
+                <img src="/static/default.png" width="50">
+            {{end}}
+
+            <p>{{.Username}}</p>
+
+        </div>
+    {{end}}
     {{else}}
         <a href="/login">
             <button>->] CONNEXION</button>
         </a>
-{{end}}
+    {{end}}
+    <h2>Utilisateurs</h2>
+
 </body>
 </html>
