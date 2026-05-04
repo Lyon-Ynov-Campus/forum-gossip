@@ -20,15 +20,9 @@
         </div>
 
         <div class="absolute right-12 top-12">
-            {{if .UserID}}
-                <a href="/profil" class="w-14 h-14 bg-white rounded-full border-[4px] border-black flex items-center justify-center text-3xl hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-                    👤
-                </a>
-            {{else}}
-                <a href="/login" class="w-14 h-14 bg-white rounded-full border-[4px] border-black flex items-center justify-center text-3xl hover:scale-110 transition-transform hover:shadow-[0_0_20px_rgba(138,206,0,0.4)]">
-                    👤
-                </a>
-            {{end}}
+            <a href="{{if .UserID}}/profil{{else}}/login{{end}}" class="w-14 h-14 bg-white rounded-full border-[4px] border-black flex items-center justify-center text-3xl hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                👤
+            </a>
         </div>
     </header>
 
