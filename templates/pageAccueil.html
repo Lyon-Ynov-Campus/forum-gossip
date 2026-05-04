@@ -21,23 +21,20 @@
 
         <div class="absolute right-12 top-12 flex items-center gap-4">
             {{if .UserID}}
-                <span class="text-[#8ACE00] font-arial-black text-sm uppercase">Connecté</span>
-                <a href="/profil">
-                    <button class="bg-[#8ACE00] text-black font-arial-black px-6 py-2 rounded-full text-sm hover:scale-105 transition-transform">
-                        MON PROFIL
-                    </button>
+                <div class="bg-[#8ACE00] text-black font-arial-black px-6 py-2 rounded-full text-sm uppercase">
+                    CONNECTÉ
+                </div>
+                <a href="/profil" class="w-12 h-12 bg-white rounded-full border-[3px] border-black flex items-center justify-center text-2xl hover:scale-110 transition-transform">
+                    👤
                 </a>
             {{else}}
-                <a href="/login">
-                    <button class="bg-[#8ACE00] text-black font-arial-black px-6 py-2 rounded-full flex items-center gap-2 text-sm hover:scale-105 transition-transform">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/></svg>
-                        CONNEXION
-                    </button>
+                <div class="bg-[#8ACE00] text-black font-arial-black px-6 py-2 rounded-full text-sm uppercase">
+                    GUEST
+                </div>
+                <a href="/login" class="w-12 h-12 bg-white rounded-full border-[3px] border-black flex items-center justify-center text-2xl hover:scale-110 transition-transform">
+                    👤
                 </a>
             {{end}}
-            <div class="w-12 h-12 bg-white rounded-full border-[3px] border-black flex items-center justify-center text-2xl">
-                👤
-            </div>
         </div>
     </header>
 
@@ -47,7 +44,7 @@
                 <div class="w-12 h-12 rounded-full bg-[#FF007F] border-[4px] border-black flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </div>
-                <input type="text" placeholder="SEARCH THE TEA..." class="flex-1 text-black text-xl font-arial-black outline-none placeholder:text-black/50">
+                <input type="text" placeholder="SEARCH THE TEA..." class="flex-1 text-black text-xl font-arial-black outline-none placeholder:text-black/50 bg-transparent">
             </div>
         </div>
 
