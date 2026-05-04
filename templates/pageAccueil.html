@@ -19,19 +19,13 @@
             <span class="text-black text-xl font-arial-black leading-tight uppercase">Goss'ip<br>Tea</span>
         </div>
 
-        <div class="absolute right-12 top-12 flex items-center gap-4">
+        <div class="absolute right-12 top-12">
             {{if .UserID}}
-                <div class="bg-[#8ACE00] text-black font-arial-black px-6 py-2 rounded-full text-sm uppercase">
-                    CONNECTÉ
-                </div>
-                <a href="/profil" class="w-12 h-12 bg-white rounded-full border-[3px] border-black flex items-center justify-center text-2xl hover:scale-110 transition-transform">
+                <a href="/profil" class="w-14 h-14 bg-white rounded-full border-[4px] border-black flex items-center justify-center text-3xl hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                     👤
                 </a>
             {{else}}
-                <div class="bg-[#8ACE00] text-black font-arial-black px-6 py-2 rounded-full text-sm uppercase">
-                    GUEST
-                </div>
-                <a href="/login" class="w-12 h-12 bg-white rounded-full border-[3px] border-black flex items-center justify-center text-2xl hover:scale-110 transition-transform">
+                <a href="/login" class="w-14 h-14 bg-white rounded-full border-[4px] border-black flex items-center justify-center text-3xl hover:scale-110 transition-transform hover:shadow-[0_0_20px_rgba(138,206,0,0.4)]">
                     👤
                 </a>
             {{end}}
