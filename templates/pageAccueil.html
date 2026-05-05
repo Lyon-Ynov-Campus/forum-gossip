@@ -70,6 +70,28 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="group-hover:rotate-90 transition-transform"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         </button>
     </div>
-
+      {{if .UserID}}
+        <p>Connecté</p>
+        <a href="/profil">
+            <button>Mon profil</button>
+        </a>
+        {{range .Users}}
+        <div>
+ 
+            {{if .Avatar}}
+                <img src="{{.Avatar}}" width="50">
+            {{else}}
+                <img src="/static/default.png" width="50">
+            {{end}}
+ 
+            <p>{{.Username}}</p>
+ 
+        </div>
+    {{end}}
+    {{else}}
+        <a href="/login">
+            <button>->] CONNEXION</button>
+        </a>
+    {{end}}
 </body>
 </html>

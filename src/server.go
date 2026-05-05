@@ -17,9 +17,12 @@ func Server() {
 	http.HandleFunc("/", Home)
 	http.HandleFunc("/login", Login)
 	http.HandleFunc("/logout", Logout)
+	//http.HandleFunc("/register", Register)
 	http.HandleFunc("/delete-account", DeleteAccount)
 	http.HandleFunc("/profil", Profil)
 	http.HandleFunc("/share", Share)
+	http.HandleFunc("/update-user", UpdateUser)
+
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 

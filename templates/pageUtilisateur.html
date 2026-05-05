@@ -6,12 +6,21 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="/">Retour accueil</a>
+    <h1>PROFIL TEST</h1>
+
+    <form action="/update-user" method="POST">
+        <input type="text" name="username" value="{{.Username}}">
+        <input type="email" name="email" value="{{.Email}}">
+        <input type="password" name="password" placeholder="Nouveau mot de passe">
+        <input type="text" name="avatar" placeholder="URL image avatar">
+        <button>Modifier</button>
+    </form>
+    <img src="{{.Avatar}}" width="100">
+
+    <p>{{.Username}}</p>
     <form action="/delete-account" method="POST">
         <button>Supprimer mon compte</button>
     </form>
-    {{if eq .Message "deleted"}}
-        <p style="color:red;">Compte supprimé avec succès</p>
-    {{end}}
+    <a href="/">Retour accueil</a>
 </body>
 </html>
