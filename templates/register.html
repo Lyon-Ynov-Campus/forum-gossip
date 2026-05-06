@@ -1,22 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>GOSS'IP TEA - INSCRIPTION</title>
+    <link rel="stylesheet" href="/static/register.css">
 </head>
 <body>
-    <h1>REGISTER</h1>
-    {{if .Error}}
-       <p class="error">{{.Error}}</p>
-    {{end}}
-    <form method="post">
-        <label>Username:</label><br />
-        <label>Email:</label><br />
-        <label>Avatar:</label><br />
-        <label>Password:</label><br />
-        <label>Password:</label><br />
-        <input type="s'inscrire">
-    </form>
+    <div class="noise-overlay"></div>
+
+    <div class="container">
+        <div class="logo-container">
+            <a href="/" class="logo-btn">GOSS'IP TEA</a>
+        </div>
+
+        <div class="register-card">
+            <div class="header-row">
+                <div class="diamond-icon">
+                    <span class="plus-symbol">+</span>
+                </div>
+                <h2>INSCRIPTION</h2>
+            </div>
+
+            {{if .Error.Main}}
+                <p class="error-msg">{{.Error.Main}}</p>
+            {{end}}
+
+            <form action="/register" method="POST" enctype="multipart/form-data">
+                
+                <div class="avatar-section">
+                    <div class="avatar-circle">
+                        <img id="preview" src="#" alt="Aperçu" style="display:none;">
+                        <span id="upload-placeholder">↑</span>
+                    </div>
+                    <label for="avatar-input" class="upload-btn">Choisir Avatar</label>
+                    <input type="file" id="avatar-input" name="avatar" accept="image/*" hidden>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" name="username" placeholder="Username" value="{{.Values.Username}}" required>
+                     {{if .Error.Username}}
+                        <p class="error-msg">{{.Error.Username}}</p>
+                    {{end}}
+
+                    {{if .Error.SameUsername}}
+                        <p class="error-msg">{{.Error.SameUsername}}</p>
+                    {{end}}
+
+                    <input type="email" name="email" placeholder="Email" value="{{.Values.Email}}" required>
+                     {{if .Error.Email}}
+                        <p class="error-msg">{{.Error.Email}}</p>
+                    {{end}}
+
+                    {{if .Error.SameEmail}}
+                        <p class="error-msg">{{.Error.SameEmail}}</p>
+                    {{end}}
+
+                    <input type="password" name="password" placeholder="Password" required>
+                    {{if .Error.PasswordLength}}
+                        <p class="error-msg">{{.Error.PasswordLength}}</p>
+                    {{end}}
+
+                    {{if .Error.PasswordConfirmation}}
+                        <p class="error-msg">{{.Error.PasswordConfirmation}}</p>
+                    {{end}}
+
+                    <input type="password" name="password_confirmation" placeholder="Password again" required>
+                    {{if .Error.PasswordConfirmation}}
+                        <p class="error-msg">{{.Error.PasswordConfirmation}}</p>
+                    {{end}}
+
+                    {{if .Error.PasswordLength}}
+                        <p class="error-msg">{{.Error.PasswordLength}}</p>
+                    {{end}}
+                </div>
+
+                <div class="submit-container">
+                    <button type="submit" class="submit-btn">S'INSCRIRE</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="footer-link">
+            <a href="/login">Vous avez déjà un compte? Connexion</a>
+        </div>
+    </div>
 </body>
 </html>
