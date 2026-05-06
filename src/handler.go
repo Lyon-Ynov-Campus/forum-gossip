@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -91,7 +92,8 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		db.Exec("UPDATE users SET email = ? WHERE id = ?", email, id)
 	}
 	if password != "" {
-		db.Exec("UPDATE users SET password = ? WHERE id = ?", password, id)
+		hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	db.Exec("UPDATE users SET password = ? WHERE id = ?", string(hash), id)
 	}
 	if avatar != "" {
 		db.Exec("UPDATE users SET avatar = ? WHERE id = ?", avatar, id)
