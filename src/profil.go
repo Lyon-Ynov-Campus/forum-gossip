@@ -17,11 +17,15 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 		Email    string
 		Avatar   string
 	}
+	var avatar *string
 	err := db.QueryRow(
-		"SELECT username, email, avatar FROM users WHERE id = ?", id).Scan(&user.Username, &user.Email, &user.Avatar)
+		"SELECT username, email, avatar FROM users WHERE id = ?", id).Scan(&user.Username, &user.Email, &avatar)
 	if err != nil {
 		http.Error(w, "Erreur récupération user", 500)
 		return
+	}
+	if avatar != nil {
+		user.Avatar = *avatar
 	}
 	tmpl, _ := template.ParseFiles("templates/pageUtilisateur.html")
 	tmpl.Execute(w, user)

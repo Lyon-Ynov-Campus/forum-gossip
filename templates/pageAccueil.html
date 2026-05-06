@@ -8,25 +8,14 @@
 <body>
     <h1>PageAccueil </h1>
 
-
     {{if .UserID}}
         <p>Connecté</p>
+        {{if .MyAvatar}}
+            <img src="{{.MyAvatar}}" width="50">
+        {{end}}
         <a href="/profil">
             <button>Mon profil</button>
         </a>
-        {{range .Users}}
-        <div>
-
-            {{if .Avatar}}
-                <img src="{{.Avatar}}" width="50">
-            {{else}}
-                <img src="/static/default.png" width="50">
-            {{end}}
-
-            <p>{{.Username}}</p>
-
-        </div>
-    {{end}}
     {{else}}
         <a href="/login">
             <button>->] CONNEXION</button>
