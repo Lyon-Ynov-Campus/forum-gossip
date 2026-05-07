@@ -3,6 +3,7 @@ package src
 import (
 	"html/template"
 	"net/http"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -14,6 +15,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	mail := r.FormValue("email")
 	pass := r.FormValue("password")
+
 	var id int
 	var dbPass string
 
@@ -23,11 +25,19 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		WHERE email = ? OR username = ?
 	`, mail, mail).Scan(&id, &dbPass)
 
-	if err != nil || pass != dbPass {
+	if err != nil {
 		t, _ := template.ParseFiles("templates/login.html")
 		t.Execute(w, map[string]string{"Error": "Email ou mot de passe incorrect"})
 		return
 	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(dbPass), []byte(pass))
+	if err != nil {
+		t, _ := template.ParseFiles("templates/login.html")
+		t.Execute(w, map[string]string{"Error": "Email ou mot de passe incorrect"})
+		return
+	}
+
 	addSession(w, id)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

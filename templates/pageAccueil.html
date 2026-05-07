@@ -14,6 +14,7 @@
 </head>
 <body class="antialiased">
 
+<<<<<<< HEAD
     <header class="w-full max-w-7xl mx-auto px-12 pt-8 flex justify-center items-center relative">
         <div class="w-36 h-36 bg-[#FF007F] border-[4px] border-black rounded-full flex flex-col items-center justify-center text-center logo-glow z-10">
             <span class="text-black text-xl font-arial-black leading-tight uppercase">Goss'ip<br>Tea</span>
@@ -70,8 +71,12 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="group-hover:rotate-90 transition-transform"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         </button>
     </div>
-      {{if .UserID}}
+
+    {{if .UserID}}
         <p>Connecté</p>
+        {{if .MyAvatar}}
+            <img src="{{.MyAvatar}}" width="50">
+        {{end}}
         <a href="/profil">
             <button>Mon profil</button>
         </a>
@@ -88,6 +93,7 @@
  
         </div>
     {{end}}
+
     {{else}}
         <a href="/login">
             <button>->] CONNEXION</button>

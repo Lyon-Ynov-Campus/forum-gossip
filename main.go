@@ -74,6 +74,7 @@ func main() {
 	if _, err := db.Exec(queryComments); err != nil {
 		log.Fatal(err)
 	}
+	//`SELECT username FROM users WHERE username = ?);`
 
 	forum.SetDb(db)
 	forum.Server()
