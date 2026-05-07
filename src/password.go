@@ -10,7 +10,7 @@ import (
 
 func sendMail(to string, link string) {
 	from := "avril.brn.gnzz@gmail.com"
-	password := "pqgn uweh cxrp lsqp"
+	password := "irkl ngil xdzq vbbl"
 	msg := "Subject: Reset password\n\nClique ici pour changer ton mot de passe : " + link
 	err := smtp.SendMail(
 		"smtp.gmail.com:587",
