@@ -4,32 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/utilisateur.css">
-    <title>Document</title>
+    <title>Profil</title>
 </head>
 <body>
+    {{if .Error}}
+        <p style="color:red">{{.Error}}</p>
+    {{end}}
+    {{if .Success}}
+        <p style="color:green">{{.Success}}</p>
+    {{end}}
+
     <div class="logo">GOSS'IP TEA</div>
+
     <div class="profile-top">
-        <img src="{{.Avatar}}">
+        <img src="{{if .Avatar}}{{.Avatar}}{{else}}/static/default.png{{end}}">
         <div class="tabs">
-            <form action="/update-user" method="POST" id="update-form"></form>
-            <button type="submit" form="update-form" class="btn-modifier">Modifier</button>
-            <a href="/" class="btn-retour">Retour accueil</a>
             <form action="/logout" method="POST" style="display:inline;">
                 <button type="submit" class="btn-deconnexion">Se déconnecter</button>
+                <a href="/" class="btn-retour">Retour accueil</a>
             </form>
         </div>
     </div>
 
-    <div class="fields">
-        <input type="text" name="username" value="{{.Username}}" form="update-form">
-        <input type="password" name="password" placeholder="Nouveau mot de passe" form="update-form">
-        <input type="email" name="email" value="{{.Email}}" form="update-form">
-        <input type="text" name="avatar" value="{{.Avatar}}" placeholder="URL image avatar" form="update-form">
-    </div>
+    <form action="/update-user" method="POST">
+        <div class="fields">
+            <button type="submit" class="btn-modifier">Modifier</button>
+            <input type="text" name="username" value="{{.Username}}">
+            <input type="email" name="email" value="{{.Email}}">
+            <input type="password" name="password" placeholder="Nouveau mot de passe">
+            <input type="text" name="avatar" value="{{.Avatar}}" placeholder="URL image avatar">
+        </div>
+    </form>
 
     <form action="/delete-account" method="POST">
         <button class="btn-delete">Supprimer mon compte</button>
     </form>
-
 </body>
 </html>

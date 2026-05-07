@@ -61,7 +61,6 @@ func ResetPassword(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
-
 	hash, _ := bcrypt.GenerateFromPassword([]byte(newPass), bcrypt.DefaultCost)
 	db.Exec("UPDATE users SET password = ? WHERE email = ?", string(hash), email)
 	http.Redirect(w, r, "/login", http.StatusSeeOther)

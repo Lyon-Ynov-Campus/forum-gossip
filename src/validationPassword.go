@@ -23,6 +23,5 @@ func isValidPassword(password string) (bool, string) {
 	if !lower || !upper || !digit || !special {
 		return false, "Majuscule, minuscule, chiffre et caractère spécial requis"
 	}
-
 	return true, ""
 }

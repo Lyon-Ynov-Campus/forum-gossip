@@ -9,6 +9,9 @@
 <body>
     <h2>Changer mot de passe</h2>
 
+    {{if .Error}}
+        <p style="color:red">{{.Error}}</p>
+    {{end}}
     <form action="/reset" method="POST">
         <input type="hidden" name="email" value="{{.Email}}">
         <input type="password" name="password" placeholder="Nouveau mot de passe" required>

@@ -16,7 +16,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	mail := r.FormValue("email")
 	pass := r.FormValue("password")
-
 	var id int
 	var dbPass string
 
