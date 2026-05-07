@@ -3,6 +3,7 @@ package src
 import (
 	"html/template"
 	"net/http"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -44,5 +45,5 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 func Logout(w http.ResponseWriter, r *http.Request) {
 	removeSession(w, r)
-	http.Redirect(w, r, "/login", http.StatusSeeOther)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

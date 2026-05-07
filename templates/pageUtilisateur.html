@@ -12,11 +12,15 @@
         <input type="text" name="username" value="{{.Username}}">
         <input type="email" name="email" value="{{.Email}}">
         <input type="password" name="password" placeholder="Nouveau mot de passe">
-        <input type="text" name="avatar" placeholder="URL image avatar">
+        <input type="text" name="avatar" value="{{.Avatar}}" placeholder="URL image avatar">
         <button>Modifier</button>
     </form>
     <img src="{{.Avatar}}" width="100">
 
+
+    <form action="/logout" method="POST" style="display:inline;">
+        <button type="submit">Se déconnecter</button>
+    </form>
     <p>{{.Username}}</p>
     <form action="/delete-account" method="POST">
         <button>Supprimer mon compte</button>
