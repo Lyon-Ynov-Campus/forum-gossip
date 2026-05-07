@@ -1,12 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Goss'ip Tea</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #000000; }
+        .font-arial-black { font-family: "Arial Black", Arial, sans-serif; }
+        .diamond-shape { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+        .logo-glow { box-shadow: 0 0 50px rgba(255, 0, 127, 0.5); }
+    </style>
 </head>
-<body>
-    <h1>PageAccueil </h1>
+<body class="antialiased">
+
+<<<<<<< HEAD
+    <header class="w-full max-w-7xl mx-auto px-12 pt-8 flex justify-center items-center relative">
+        <div class="w-36 h-36 bg-[#FF007F] border-[4px] border-black rounded-full flex flex-col items-center justify-center text-center logo-glow z-10">
+            <span class="text-black text-xl font-arial-black leading-tight uppercase">Goss'ip<br>Tea</span>
+        </div>
+
+        <div class="absolute right-12 top-12">
+            <a href="{{if .UserID}}/profil{{else}}/login{{end}}" class="w-14 h-14 bg-white rounded-full border-[4px] border-black flex items-center justify-center text-3xl hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                👤
+            </a>
+        </div>
+    </header>
+
+    <div class="container max-w-7xl mx-auto px-12 pb-24 pt-12">
+        <div class="mb-16 flex justify-center">
+            <div class="w-full max-w-4xl h-20 bg-white border-[4px] border-black rounded-full flex items-center px-8 gap-4 shadow-[10px_10px_0px_0px_rgba(255,0,127,1)]">
+                <div class="w-12 h-12 rounded-full bg-[#FF007F] border-[4px] border-black flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <input type="text" placeholder="SEARCH THE TEA..." class="flex-1 text-black text-xl font-arial-black outline-none placeholder:text-black/50 bg-transparent">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+            <div class="flex flex-col">
+                <div class="aspect-square bg-black border-[6px] border-[#FF007F] overflow-hidden shadow-[0_0_20px_rgba(255,0,127,0.3)]">
+                    <img src="https://images.unsplash.com/flagged/photo-1584156820857-5b27db4be1a9?w=600" class="w-full h-full object-cover">
+                </div>
+                <div class="flex items-center gap-3 mt-4">
+                    <div class="w-10 h-10 rounded-full border-[3px] border-white overflow-hidden bg-gray-800"></div>
+                    <span class="text-white text-md font-arial-black">@popqueen</span>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <div class="aspect-square bg-black border-[6px] border-[#FF007F] overflow-hidden shadow-[0_0_20px_rgba(255,0,127,0.3)]">
+                    <img src="https://images.unsplash.com/photo-1734601554203-15be74afc894?w=600" class="w-full h-full object-cover">
+                </div>
+                <div class="flex items-center gap-3 mt-4">
+                    <div class="w-10 h-10 rounded-full border-[3px] border-white overflow-hidden bg-gray-800"></div>
+                    <span class="text-white text-md font-arial-black">@gossipgirl</span>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <div class="aspect-square bg-black border-[6px] border-[#FF007F] overflow-hidden shadow-[0_0_20px_rgba(255,0,127,0.3)]">
+                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600" class="w-full h-full object-cover">
+                </div>
+                <div class="flex items-center gap-3 mt-4">
+                    <div class="w-10 h-10 rounded-full border-[3px] border-white overflow-hidden bg-gray-800"></div>
+                    <span class="text-white text-md font-arial-black">@starstruck</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="fixed bottom-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-[#8ACE00] border-[4px] border-black flex items-center justify-center hover:bg-[#FF007F] shadow-[0_0_30px_rgba(138,206,0,0.6)] transition-all duration-300 diamond-shape group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="group-hover:rotate-90 transition-transform"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+    </div>
 
     {{if .UserID}}
         <p>Connecté</p>
@@ -16,12 +80,24 @@
         <a href="/profil">
             <button>Mon profil</button>
         </a>
+        {{range .Users}}
+        <div>
+ 
+            {{if .Avatar}}
+                <img src="{{.Avatar}}" width="50">
+            {{else}}
+                <img src="/static/default.png" width="50">
+            {{end}}
+ 
+            <p>{{.Username}}</p>
+ 
+        </div>
+    {{end}}
+
     {{else}}
         <a href="/login">
             <button>->] CONNEXION</button>
         </a>
     {{end}}
-    <h2>Utilisateurs</h2>
-
 </body>
 </html>

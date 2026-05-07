@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+     <link rel="stylesheet" href="/static/share.css">
+</head>
+<body>
+    <div class="share-container">
+    <form action="/share" method="POST">
+            <div class="share-header">
+                 <div class="dizmond-plus">
+                     <span class="plus-icon">+</span>
+                 </div>
+                  <h1 class="font-bold-black" style="color: white; font-size: 2.5rem;">SHARE</h1>
+            </div>
+            <div class="tabs-container">
+                 <button type="button" class="tab-btn active" onclick="setTab(this, 'Texte')">Texte</button>
+            <button type="button" class="tab-btn" onclick="setTab(this, 'Image')">Image</button>
+            <button type="button" class="tab-btn" onclick="setTab(this, 'Lien')">Lien</button>
+            <input type="hidden" name="type" id="active-tab-input" value="Texte">
+        </div>
+        <div class="input-field">
+            <input type="text" name="title" placeholder="Titre" required>
+        </div>
+        <div class="textarea-field">
+            <textarea name="content" placeholder="Corps de texte... Spill ALL the tea here!" required></textarea>
+        </div>
+        <div class="publish-container">
+            <button type="submit" class="btn-publish">Publier</button>
+        </div>
+    </form>
+</div>
+<script>
+    function setTab(element, value) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+        document.getElementById('active-tab-input').value = value;
+    }
+</script>
+</body>
+</html>

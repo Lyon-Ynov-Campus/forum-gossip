@@ -8,6 +8,7 @@ import (
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
+
 	id := getUser(r)
 	msg := r.URL.Query().Get("msg")
 	tmpl, err := template.ParseFiles("templates/pageAccueil.html")
