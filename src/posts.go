@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func Share(w http.ResponseWriter, r *http.Request) {
+func Posts(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "GET" {
 		tmpl, err := template.ParseFiles("templates/share.html")
@@ -32,4 +32,12 @@ func Share(w http.ResponseWriter, r *http.Request) {
 
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
+}
+
+func ChangePost(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func DeletePost(w http.ResponseWriter, r *http.Request) {
+
 }

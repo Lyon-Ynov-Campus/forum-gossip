@@ -20,7 +20,7 @@ func Server() {
 	http.HandleFunc("/register", Register)
 	http.HandleFunc("/delete-account", DeleteAccount)
 	http.HandleFunc("/profil", Profil)
-	http.HandleFunc("/share", Share)
+	http.HandleFunc("/posts", Posts)
 	http.HandleFunc("/update-user", UpdateUser)
 	http.HandleFunc("/forgot", ForgotPassword)
 	http.HandleFunc("/reset", ResetPassword)
