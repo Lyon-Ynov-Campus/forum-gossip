@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/static/accueil.css">
+    <title>Goss'ip Tea</title>
 </head>
 <body>
-    <h1>PageAccueil </h1>
+    <h1>PageAccueil</h1>
 
     {{if .UserID}}
         <p>Connecté</p>
@@ -21,7 +22,14 @@
             <button>->] CONNEXION</button>
         </a>
     {{end}}
+
     <h2>Utilisateurs</h2>
 
+    <form action="/search" method="GET" class="search-form">
+        <div class="search-bar">
+            <span class="search-icon">Recherche</span>
+            <input type="text" name="q" placeholder="Recherche profil...">
+        </div>
+    </form>
 </body>
 </html>
