@@ -3,6 +3,7 @@ package src
 import (
 	"html/template"
 	"net/http"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -15,7 +16,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	mail := r.FormValue("email")
 	pass := r.FormValue("password")
-
 	var id int
 	var dbPass string
 
@@ -44,5 +44,5 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 func Logout(w http.ResponseWriter, r *http.Request) {
 	removeSession(w, r)
-	http.Redirect(w, r, "/login", http.StatusSeeOther)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
