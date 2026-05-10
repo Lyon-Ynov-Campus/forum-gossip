@@ -1,9 +1,11 @@
 package src
 
 import (
+	"database/sql"
 	"html/template"
 	"log"
 	"net/http"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -80,10 +82,12 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
+
 	username := r.FormValue("username")
 	email := r.FormValue("email")
 	password := r.FormValue("password")
 	avatar := r.FormValue("avatar")
+	data := map[string]interface{}{}
 
 	if username != "" {
 		db.Exec("UPDATE users SET username = ? WHERE id = ?", username, id)
@@ -92,11 +96,42 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		db.Exec("UPDATE users SET email = ? WHERE id = ?", email, id)
 	}
 	if password != "" {
-		hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	db.Exec("UPDATE users SET password = ? WHERE id = ?", string(hash), id)
+		ok, msg := isValidPassword(password)
+		if !ok {
+			data["Error"] = msg
+		} else {
+			hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+			db.Exec("UPDATE users SET password = ? WHERE id = ?", string(hash), id)
+			data["Success"] = "Mot de passe modifié"
+		}
 	}
 	if avatar != "" {
 		db.Exec("UPDATE users SET avatar = ? WHERE id = ?", avatar, id)
 	}
-	http.Redirect(w, r, "/profil", http.StatusSeeOther)
+
+	var user struct {
+		Username string
+		Email    string
+		Avatar   string
+	}
+	var avatarNull sql.NullString
+	db.QueryRow("SELECT username, email, avatar FROM users WHERE id = ?", id).Scan(&user.Username, &user.Email, &avatarNull)
+	if avatarNull.Valid && avatarNull.String != "" {
+		user.Avatar = avatarNull.String
+	} else {
+		user.Avatar = "/static/default.png"
+	}
+	data["Username"] = user.Username
+	data["Email"] = user.Email
+	data["Avatar"] = user.Avatar
+
+	tmpl, err := template.ParseFiles("templates/pageUtilisateur.html")
+	if err != nil {
+		http.Error(w, "Erreur template", 500)
+		return
+	}
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Println("Erreur Execute UpdateUser:", err)
+	}
 }

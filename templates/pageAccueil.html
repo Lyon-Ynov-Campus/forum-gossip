@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/static/accueil.css">
+    <title>Goss'ip Tea</title>
 </head>
 <body>
-    <h1>PageAccueil </h1>
+    <h1>PageAccueil</h1>
 
     {{if .UserID}}
         <p>Connecté</p>
@@ -22,6 +23,8 @@
         </a>
     {{end}}
     <h2>Utilisateurs</h2>
-
+    <a href="/search">
+        <button>Rechercher un profil</button>
+    </a>
 </body>
 </html>

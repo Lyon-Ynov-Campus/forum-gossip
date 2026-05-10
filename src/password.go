@@ -5,12 +5,13 @@ import (
 	"html/template"
 	"net/http"
 	"net/smtp"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
 func sendMail(to string, link string) {
 	from := "avril.brn.gnzz@gmail.com"
-	password := "pqgn uweh cxrp lsqp"
+	password := "irkl ngil xdzq vbbl"
 	msg := "Subject: Reset password\n\nClique ici pour changer ton mot de passe : " + link
 	err := smtp.SendMail(
 		"smtp.gmail.com:587",
@@ -49,11 +50,18 @@ func ResetPassword(w http.ResponseWriter, r *http.Request) {
 		t.Execute(w, map[string]string{"Email": email})
 		return
 	}
-
 	email := r.FormValue("email")
 	newPass := r.FormValue("password")
+	ok, msg := isValidPassword(newPass)
+	if !ok {
+		t, _ := template.ParseFiles("templates/reset.html")
+		t.Execute(w, map[string]string{
+			"Email": email,
+			"Error": msg,
+		})
+		return
+	}
 	hash, _ := bcrypt.GenerateFromPassword([]byte(newPass), bcrypt.DefaultCost)
 	db.Exec("UPDATE users SET password = ? WHERE email = ?", string(hash), email)
-
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
