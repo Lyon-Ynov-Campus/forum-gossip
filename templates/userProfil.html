@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/userProfil.css">
+    <title>{{.Username}}</title>
+</head>
+<body>
+    <div class="topbar">
+        <div class="logo">GOSS'IP TEA</div>
+        <a href="/search" class="btn-retour">Retour</a>
+    </div>
+
+    <div class="profile-header">
+        <img src="{{.Avatar}}" alt="avatar">
+        <h1>{{.Username}}</h1>
+    </div>
+
+    <div class="posts">
+        {{if .Posts}}
+            {{range .Posts}}
+            <div class="post-card">
+                <h2 class="post-title">{{.Title}}</h2>
+                <div class="post-divider"></div>
+                <p class="post-content">{{.Content}}</p>
+                <div class="post-stats">
+                    <span>{{.NbLikes}}</span>
+                    <span>{{.NbComments}}</span>
+                    <span class="post-date">{{.PublicationDate}}</span>
+                </div>
+            </div>
+            {{end}}
+        {{else}}
+            <p class="no-post">Aucun post pour l'instant.</p>
+        {{end}}
+    </div>
+</body>
+</html>

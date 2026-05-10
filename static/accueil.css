@@ -1,0 +1,81 @@
+.avatar-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff2d78;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-image-btn {
+  aspect-ratio: 1;
+  background: black;
+  border: 4px solid #FF007F;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 30px rgba(255, 0, 127, 0.4);
+  transition: border-color 0.2s;
+}
+
+.post-image-btn:hover {
+  border-color: #8ACE00;
+}
+
+.post-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  filter: saturate(1.5) contrast(1.3) brightness(1.1);
+  transition: transform 0.2s;
+}
+
+.post-image-btn:hover .post-image {
+  transform: scale(1.05);
+}
+
+.post-overlay {
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.post-image-btn:hover .post-overlay {
+  opacity: 0.2;
+}
+
+.post-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.post-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 4px solid black;
+  overflow: hidden;
+  background: white;
+}
+
+.post-username {
+  color: white;
+  font-size: 1.125rem;
+  font-family: "Arial Black", Arial, sans-serif;
+}
+
+.post-divider {
+  height: 4px;
+  background: black;
+  margin-top: 8px;
+}
