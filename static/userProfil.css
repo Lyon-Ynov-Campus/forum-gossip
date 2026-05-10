@@ -121,3 +121,13 @@ a.profile-card {
     color: inherit;
     display: flex;
 }
+
+a.post-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+a.post-card:hover {
+    background: #2a0a14;
+}

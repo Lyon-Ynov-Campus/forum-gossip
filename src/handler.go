@@ -61,15 +61,15 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	var posts []Post
 	rows2, err := db.Query(`
-	SELECT posts.id, posts.title, posts.content, posts.publication_date, users.username, users.avatar,
+    SELECT posts.id, posts.title, posts.content, posts.publication_date, users.username, users.avatar,
         COUNT(DISTINCT comments.id) AS nb_comments,
         COUNT(DISTINCT likes.id) AS nb_likes
-	FROM posts
-	JOIN users ON posts.user_id = users.id
-	LEFT JOIN comments ON posts.id = comments.post_id
-	LEFT JOIN likes ON posts.id = likes.post_id
-	GROUP BY posts.id
-	ORDER BY posts.publication_date DESC
+    FROM posts
+    JOIN users ON posts.user_id = users.id
+    LEFT JOIN comments ON posts.id = comments.post_id
+    LEFT JOIN likes ON posts.id = likes.post_id
+    GROUP BY posts.id
+    ORDER BY posts.publication_date DESC
 	`)
 	if err != nil {
 		fmt.Println("erreur ajout post", err)

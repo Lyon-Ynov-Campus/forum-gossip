@@ -149,3 +149,70 @@ p {
     display: inline-block;
     margin-bottom: 40px;
 }
+
+.mes-posts {
+    margin-top: 48px;
+}
+
+.mes-posts h2 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 24px;
+}
+
+a.post-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    background: #1a1a1a;
+    border: 2px solid #ff2d78;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    transition: background 0.2s;
+}
+
+a.post-card:hover {
+    background: #2a0a14;
+}
+
+.post-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.post-divider {
+    height: 2px;
+    background: #ff2d78;
+    margin-bottom: 12px;
+}
+
+.post-content {
+    font-size: 14px;
+    color: #ddd;
+    font-family: Arial, sans-serif;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.post-stats {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: #aaa;
+    font-weight: 700;
+}
+
+.post-date {
+    margin-left: auto;
+    font-size: 12px;
+    color: #666;
+}
+
+.no-post {
+    color: #888;
+    font-size: 16px;
+}

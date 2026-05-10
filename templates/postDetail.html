@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Post.Title}}</title>
+    <link rel="stylesheet" href="/static/postDetail.css">
+</head>
+<body>
+<div class="container">
+
+    <a href="/" class="btn-retour">Retour</a>
+
+    <div class="post-card">
+        <h1 class="post-title">{{.Post.Title}}</h1>
+        <div class="post-divider"></div>
+        <p class="post-content">{{.Post.Content}}</p>
+
+        <div class="post-footer">
+            <div class="post-author">
+                <img src="{{.Post.Avatar}}" class="avatar">
+                <span class="username">@{{.Post.Username}}</span>
+                <span class="date">{{.Post.Date}}</span>
+            </div>
+
+            {{if .UserID}}
+            <form action="/like" method="POST">
+                <input type="hidden" name="post_id" value="{{.PostID}}">
+                <button type="submit" class="btn-like {{if .Post.Liked}}liked{{end}}">♡{{.Post.NbLikes}}</button>
+            </form>
+            {{else}}
+            <div class="btn-like disabled">♡{{.Post.NbLikes}}</div>
+            {{end}}
+        </div>
+    </div>
+
+    <h2 class="comments-title">Commentaires</h2>
+
+    {{if .UserID}}
+    <form action="/comment" method="POST" class="comment-form">
+        <input type="hidden" name="post_id" value="{{.PostID}}">
+        <textarea name="content" placeholder="Ton commentaire..." required rows="3"></textarea>
+        <button type="submit" class="btn-comment">Commenter</button>
+    </form>
+    {{else}}
+    <p class="login-msg"><a href="/login">Connecte-toi</a> pour commenter.</p>
+    {{end}}
+
+    <div class="comments-list">
+        {{if .Comments}}
+            {{range .Comments}}
+            <div class="comment-card">
+                <div class="comment-header">
+                    <span class="comment-username">@{{.Username}}</span>
+                    {{if .IsOwner}}
+                    <form action="/comment/delete" method="POST">
+                        <input type="hidden" name="comment_id" value="{{.ID}}">
+                        <input type="hidden" name="post_id" value="{{$.PostID}}">
+                        <button type="submit" class="btn-delete-comment">Supprimer</button>
+                    </form>
+                    {{end}}
+                </div>
+                <p class="comment-content">{{.Content}}</p>
+            </div>
+            {{end}}
+        {{else}}
+            <p class="no-comment">Aucun commentaire pour l'instant.</p>
+        {{end}}
+    </div>
+
+</div>
+</body>
+</html>

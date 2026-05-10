@@ -20,7 +20,7 @@
     <div class="posts">
         {{if .Posts}}
             {{range .Posts}}
-            <div class="post-card">
+            <a href="/post/{{.ID}}" class="post-card">
                 <h2 class="post-title">{{.Title}}</h2>
                 <div class="post-divider"></div>
                 <p class="post-content">{{.Content}}</p>
@@ -29,7 +29,7 @@
                     <span>{{.NbComments}}</span>
                     <span class="post-date">{{.PublicationDate}}</span>
                 </div>
-            </div>
+            </a>
             {{end}}
         {{else}}
             <p class="no-post">Aucun post pour l'instant.</p>

@@ -39,5 +39,25 @@
     <form action="/delete-account" method="POST">
         <button class="btn-delete" onclick="return confirm('Tu es sûr de vouloir supprimer ton compte ? Cette action supprimera tous vos posts et commentaires.')">Supprimer mon compte</button>
     </form>
+
+    <div class="mes-posts">
+        <h2>Mes posts</h2>
+        {{if .Posts}}
+            {{range .Posts}}
+            <a href="/post/{{.ID}}" class="post-card">
+                <h3 class="post-title">{{.Title}}</h3>
+                <div class="post-divider"></div>
+                <p class="post-content">{{.Content}}</p>
+                <div class="post-stats">
+                    <span>like{{.NbLikes}}</span>
+                    <span>commentaire{{.NbComments}}</span>
+                    <span class="post-date">{{.PublicationDate}}</span>
+                </div>
+            </a>
+            {{end}}
+        {{else}}
+            <p class="no-post">Aucun post pour l'instant.</p>
+        {{end}}
+    </div>
 </body>
 </html>

@@ -9,6 +9,11 @@ import (
 func Posts(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "GET" {
+		id := getUser(r)
+		if id == 0 {
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			return
+		}
 		tmpl, err := template.ParseFiles("templates/posts.html")
 		if err != nil {
 			http.Error(w, "Erreur lors du chargement du template", http.StatusInternalServerError)
@@ -16,7 +21,7 @@ func Posts(w http.ResponseWriter, r *http.Request) {
 		}
 
 		data := map[string]interface{}{
-			"UserID": 1,
+			"UserID": id,
 		}
 
 		tmpl.Execute(w, data)

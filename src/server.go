@@ -26,6 +26,10 @@ func Server() {
 	http.HandleFunc("/reset", ResetPassword)
 	http.HandleFunc("/search", Search)
 	http.HandleFunc("/user/", UserProfil)
+	http.HandleFunc("/post/", PostDetail)
+	http.HandleFunc("/like", LikePost)
+	http.HandleFunc("/comment", CommentPost)
+	http.HandleFunc("/comment/delete", DeleteComment)
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 

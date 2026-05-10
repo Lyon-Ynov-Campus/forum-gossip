@@ -63,7 +63,9 @@ func UserProfil(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/search", http.StatusSeeOther)
 		return
 	}
+
 	type Post struct {
+		ID              int
 		Title           string
 		Content         string
 		PublicationDate string
@@ -79,8 +81,9 @@ func UserProfil(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Utilisateur introuvable", 404)
 		return
 	}
+
 	rows, err := db.Query(`
-		SELECT p.title, p.content, p.publication_date,
+		SELECT p.id, p.title, p.content, p.publication_date,
 			COUNT(DISTINCT l.id) AS nb_likes,
 			COUNT(DISTINCT c.id) AS nb_comments
 		FROM posts p
@@ -100,7 +103,7 @@ func UserProfil(w http.ResponseWriter, r *http.Request) {
 	var posts []Post
 	for rows.Next() {
 		var p Post
-		rows.Scan(&p.Title, &p.Content, &p.PublicationDate, &p.NbLikes, &p.NbComments)
+		rows.Scan(&p.ID, &p.Title, &p.Content, &p.PublicationDate, &p.NbLikes, &p.NbComments)
 		posts = append(posts, p)
 	}
 
