@@ -37,11 +37,14 @@
     <h2 class="comments-title">Commentaires</h2>
 
     {{if .UserID}}
-    <form action="/comment" method="POST" class="comment-form">
-        <input type="hidden" name="post_id" value="{{.PostID}}">
-        <textarea name="content" placeholder="Ton commentaire..." required rows="3"></textarea>
-        <button type="submit" class="btn-comment">Commenter</button>
-    </form>
+    <button type="button" 
+            id="btn-like-{{.Post.ID}}" 
+            class="btn-like {{if .Post.Liked}}liked{{end}}" 
+            onclick="toggleLike('{{.Post.ID}}')">
+        <span id="heart-icon-{{.Post.ID}}">{{if .Post.Liked}}❤️{{else}}♡{{end}}</span>
+        <span id="like-count-{{.Post.ID}}">{{.Post.NbLikes}}</span>
+    </button>
+{{else}}
     {{else}}
     <p class="login-msg"><a href="/login">Connecte-toi</a> pour commenter.</p>
     {{end}}
@@ -69,5 +72,6 @@
     </div>
 
 </div>
+<script src="/static/js/api.js"></script>
 </body>
 </html>

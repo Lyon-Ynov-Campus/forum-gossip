@@ -25,6 +25,7 @@ func Server() {
 	http.HandleFunc("/forgot", ForgotPassword)
 	http.HandleFunc("/reset", ResetPassword)
 	http.HandleFunc("/search", Search)
+	http.HandleFunc("/api/like", LikeAPIHandler)
 	http.HandleFunc("/user/", UserProfil)
 	http.HandleFunc("/post/", PostDetail)
 	http.HandleFunc("/like", LikePost)
