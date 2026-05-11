@@ -79,6 +79,8 @@ body {
     padding: 20px 28px;
     transition: background 0.2s;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
 .profile-card:hover { background: #2a0a14; }
@@ -118,4 +120,126 @@ body {
     color: #888;
     font-size: 18px;
     margin-top: 60px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    color: #fff;
+    font-family: 'Arial Black', Arial, sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    padding: 14px 28px;
+    border: 2px solid #444;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+    letter-spacing: 0.04em;
+}
+
+button:hover {
+    border-color: #ff2d78;
+    background: #ff2d7822;
+    color: #ff2d78;
+}
+
+button[type="submit"] {
+    background: #ff2d78;
+    border-color: #ff2d78;
+    color: #fff;
+    box-shadow: 0 0 14px #ff2d7855;
+}
+
+button[type="submit"]:hover {
+    background: #e0005f;
+    border-color: #e0005f;
+    box-shadow: 0 0 24px #ff2d7899;
+    color: #fff;
+}
+
+select {
+    background: #1a1a1a;
+    color: #fff;
+    font-family: 'Arial Black', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 40px 12px 18px;
+    border: 2px solid #333;
+    border-radius: 50px;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ff2d78' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    transition: border-color 0.2s;
+}
+
+select:hover, select:focus {
+    border-color: #ff2d78;
+}
+
+.search-type {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.search-type a button {
+    background: #1a1a1a;
+    border: 2px solid #444;
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 50px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.search-type a button:hover {
+    border-color: #ff2d78;
+    background: #ff2d7822;
+    color: #ff2d78;
+}
+
+.search-type a.active button {
+    background: #ff2d78;
+    border-color: #ff2d78;
+    color: #fff;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.filters select {
+    min-width: 160px;
+}
+
+.filters button {
+    background: #ff2d78;
+    border: 2px solid #ff2d78;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 50px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filters button:hover {
+    background: #e0005f;
+    border-color: #e0005f;
 }
