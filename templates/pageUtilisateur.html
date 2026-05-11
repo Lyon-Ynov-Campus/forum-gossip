@@ -3,24 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/static/utilisateur.css">
+    <title>Profil</title>
 </head>
 <body>
-    <h1>PROFIL TEST</h1>
+    {{if .Error}}
+        <p style="color:red">{{.Error}}</p>
+    {{end}}
+    {{if .Success}}
+        <p style="color:green">{{.Success}}</p>
+    {{end}}
+
+    <div class="logo">GOSS'IP TEA</div>
+
+    <div class="profile-top">
+        <img src="{{if .Avatar}}{{.Avatar}}{{else}}/static/default.png{{end}}">
+        <div class="tabs">
+            <form action="/logout" method="POST" style="display:inline;">
+                <button type="submit" class="btn-deconnexion">Se déconnecter</button>
+                <a href="/" class="btn-retour">Retour accueil</a>
+            </form>
+        </div>
+    </div>
 
     <form action="/update-user" method="POST">
-        <input type="text" name="username" value="{{.Username}}">
-        <input type="email" name="email" value="{{.Email}}">
-        <input type="password" name="password" placeholder="Nouveau mot de passe">
-        <input type="text" name="avatar" placeholder="URL image avatar">
-        <button>Modifier</button>
+        <div class="fields">
+            <button type="submit" class="btn-modifier">Modifier</button>
+            <input type="text" name="username" value="{{.Username}}">
+            <input type="email" name="email" value="{{.Email}}">
+            <input type="password" name="password" placeholder="Nouveau mot de passe">
+            <input type="text" name="avatar" value="{{.Avatar}}" placeholder="URL image avatar">
+        </div>
     </form>
-    <img src="{{.Avatar}}" width="100">
 
-    <p>{{.Username}}</p>
     <form action="/delete-account" method="POST">
-        <button>Supprimer mon compte</button>
+        <button class="btn-delete" onclick="return confirm('Tu es sûr de vouloir supprimer ton compte ? Cette action supprimera tous vos posts et commentaires.')">Supprimer mon compte</button>
     </form>
-    <a href="/">Retour accueil</a>
+
+    <div class="mes-posts">
+        <h2>Mes posts</h2>
+        {{if .Posts}}
+            {{range .Posts}}
+            <a href="/post/{{.ID}}" class="post-card">
+                <h3 class="post-title">{{.Title}}</h3>
+                <div class="post-divider"></div>
+                <p class="post-content">{{.Content}}</p>
+                <div class="post-stats">
+                    <span>like{{.NbLikes}}</span>
+                    <span>commentaire{{.NbComments}}</span>
+                    <span class="post-date">{{.PublicationDate}}</span>
+                </div>
+            </a>
+            {{end}}
+        {{else}}
+            <p class="no-post">Aucun post pour l'instant.</p>
+        {{end}}
+    </div>
 </body>
 </html>
