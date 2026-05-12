@@ -124,35 +124,71 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 	avatar := r.FormValue("avatar")
 	data := map[string]interface{}{}
+	data["ActiveTab"] = "Modifier"
+	message := ""
 
 	if username != "" {
-		db.Exec("UPDATE users SET username = ? WHERE id = ?", username, id)
+		_, err := db.Exec("UPDATE users SET username = ? WHERE id = ?", username, id)
+		if err != nil {
+			fmt.Println("Erreur username :", err)
+			data["Error"] = "Erreur changement username"
+		} else {
+			message = "Profil modifié"
+		}
 	}
+
 	if email != "" {
-		db.Exec("UPDATE users SET email = ? WHERE id = ?", email, id)
+		_, err := db.Exec("UPDATE users SET email = ? WHERE id = ?", email, id)
+		if err != nil {
+			fmt.Println("Erreur email :", err)
+			data["Error"] = "Erreur changement email"
+		} else {
+			message = "Profil modifié"
+		}
+	}
+
+	if avatar != "" {
+		_, err := db.Exec("UPDATE users SET avatar = ? WHERE id = ?", avatar, id)
+		if err != nil {
+			fmt.Println("Erreur avatar :", err)
+			data["Error"] = "Erreur changement avatar"
+		} else {
+			message = "Profil modifié"
+		}
 	}
 	if password != "" {
 		ok, msg := isValidPassword(password)
+
 		if !ok {
 			data["Error"] = msg
 		} else {
 			hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-			db.Exec("UPDATE users SET password = ? WHERE id = ?", string(hash), id)
-			data["Success"] = "Mot de passe modifié"
+			_, err := db.Exec("UPDATE users SET password = ? WHERE id = ?", string(hash), id)
+			if err != nil {
+				fmt.Println("Erreur password :", err)
+				data["Error"] = "Erreur changement password"
+			} else {
+				message = "Mot de passe modifié"
+			}
 		}
 	}
-	if avatar != "" {
-		db.Exec("UPDATE users SET avatar = ? WHERE id = ?", avatar, id)
-	}
 
+	if message != "" {
+		data["Success"] = message
+	}
 	var user struct {
 		Username string
 		Email    string
 		Avatar   string
 	}
+
 	var avatarNull sql.NullString
-	db.QueryRow("SELECT username, email, avatar FROM users WHERE id = ?", id).Scan(&user.Username, &user.Email, &avatarNull)
-	if avatarNull.Valid && avatarNull.String != "" {
+
+	err := db.QueryRow("SELECT username, email, avatar FROM users WHERE id = ?", id).Scan(&user.Username, &user.Email, &avatarNull)
+	if err != nil {
+		fmt.Println("Erreur SELECT :", err)
+	}
+	if avatarNull.Valid {
 		user.Avatar = avatarNull.String
 	} else {
 		user.Avatar = "/static/default.png"
@@ -166,10 +202,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Erreur template", 500)
 		return
 	}
-	err = tmpl.Execute(w, data)
-	if err != nil {
-		log.Println("Erreur Execute UpdateUser:", err)
-	}
+	tmpl.Execute(w, data)
 }
 
 func UpdatePost(w http.ResponseWriter, r *http.Request) {

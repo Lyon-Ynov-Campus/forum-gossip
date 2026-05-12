@@ -10,68 +10,89 @@
     {{if .Error}}
         <p style="color:red">{{.Error}}</p>
     {{end}}
+
     {{if .Success}}
         <p style="color:green">{{.Success}}</p>
     {{end}}
 
     <div class="logo">GOSS'IP TEA</div>
-
     <div class="profile-top">
         <img src="{{if .Avatar}}{{.Avatar}}{{else}}/static/default.png{{end}}">
         <div class="tabs">
             <form action="/logout" method="POST" style="display:inline;">
                 <button type="submit" class="btn-deconnexion">Se déconnecter</button>
-                <a href="/" class="btn-retour">Retour accueil</a>
             </form>
-            <a href="/profil?tab=Modifier" class="tab-tbn" {{if eq .ActiveTab "Modifier"}}active{{end}}>Modifier</a>
+            <a href="/" class="btn-retour">Retour accueil</a>
+            <a href="/profil?tab=Modifier" class="btn-tab {{if eq .ActiveTab "Modifier"}}active{{end}}">Modifier</a>
             <a href="/profil?tab=Publications" class="btn-tab {{if eq .ActiveTab "Publications"}}active{{end}}">Publications</a>
             <a href="/profil?tab=Commentaires" class="btn-tab {{if eq .ActiveTab "Commentaires"}}active{{end}}">Commentaires</a>
             <a href="/profil?tab=Likes" class="btn-tab {{if eq .ActiveTab "Likes"}}active{{end}}">Likes</a>
-            
         </div>
     </div>
-        {{if eq .ActiveTab "Modifier"}}
-        <form action="/update-user" method="POST">
-            <button type="submit" class="btn-modifier">Modifier</button>
-            <div class="fiel-row"><input type="text" name="username" value="{{.Username}}"></div>
-            <div class="fiel-row"><input type="email" name="email" value="{{.Email}}"></div>
-            <div class="fiel-row"><input type="password" name="password" placeholder="Nouveau mot de passe"></div>
-            <div class="fiel-row"><input type="text" name="avatar" value="{{.Avatar}}" placeholder="URL image avatar"></div>
-        </form>
-        <form action="/delete-account" method="POST">
-            <button class="btn-delete" onclick="return confirm('Tu es sûr de vouloir supprimer ton compte ? Cette action supprimera tous vos posts et commentaires.')">Supprimer mon compte</button>
-        </form>
-        {{else if eq .ActiveTab "Publications"}}
-        <div class="mes-posts">
+
+    {{if eq .ActiveTab "Modifier"}}
+    <form action="/update-user" method="POST">
+        <button type="submit" class="btn-modifier">Modifier</button>
+
+        <div class="field-row">
+            <input type="text" name="username" value="{{.Username}}">
+        </div>
+
+        <div class="field-row">
+            <input type="email" name="email" value="{{.Email}}">
+        </div>
+
+        <div class="field-row">
+            <input type="password"
+            name="password"
+            placeholder="Nouveau mot de passe"
+            autocomplete="new-password">
+        </div>
+
+        <div class="field-row">
+            <input type="text" name="avatar" value="{{.Avatar}}" placeholder="URL image avatar">
+        </div>
+    </form>
+
+    <form action="/delete-account" method="POST">
+        <button class="btn-delete" onclick="return confirm('Tu es sûr de vouloir supprimer ton compte ? Cette action supprimera tous vos posts et commentaires.')">Supprimer mon compte</button>
+    </form>
+
+    {{else if eq .ActiveTab "Publications"}}
+    <div class="mes-posts">
         <h3 class="section-title">Mes posts ({{len .Posts}})</h3>
-            {{range .Posts}}
-            <div class="post-card">
-                <h4 class="post-title">{{.Title}}</h4>
-                <div class="post-divider"></div>
-                <p class="post-content">{{.Content}}</p>
-                <div class="post-stats">
-                    <span>like{{.NbLikes}}</span>
-                    <span>commentaire{{.NbComments}}</span>
-                    <span class="post-date">{{.PublicationDate}}</span>
-                </div>
-                <div class="post-btns">
-                    <a href="/edit-post?id={{.ID}}" class="btn-edit">Modifier</a>
-                    <form action="/delete-post" method="POST" style="display:inline;">
-                        <input type="hidden" name="post_id" value="{{.ID}}">
-                        <button class="btn-delete" onclick="return confirm('Tu es sûr de vouloir supprimer ton post?')">Supprimer</button>
-                    </form>
-                </div>
+        {{range .Posts}}
+        <div class="post-card">
+            <h4 class="post-title">{{.Title}}</h4>
+            <div class="post-divider"></div>
+            <p class="post-content">{{.Content}}</p>
+
+            <div class="post-stats">
+                <span>like {{.NbLikes}}</span>
+                <span>commentaire {{.NbComments}}</span>
+                <span class="post-date">{{.PublicationDate}}</span>
             </div>
+
+            <div class="post-btns">
+                <a href="/edit-post?id={{.ID}}" class="btn-edit">Modifier</a>
+                <form action="/delete-post" method="POST" style="display:inline;">
+                    <input type="hidden" name="post_id" value="{{.ID}}">
+                    <button class="btn-delete" onclick="return confirm('Tu es sûr de vouloir supprimer ton post?')">Supprimer</button>
+                </form>
+            </div>
+        </div>
         {{else}}
-            <p class="no-post">Aucun post pour l'instant.</p>
+        <p class="no-post">Aucun post pour l'instant.</p>
         {{end}}
     </div>
-     {{else if eq .ActiveTab "Commentaires"}}
+
+    {{else if eq .ActiveTab "Commentaires"}}
     <div class="mes-posts">
         <h3 class="section-title">Mes commentaires ({{len .Comments}})</h3>
         {{range .Comments}}
         <div class="post-card" style="border-color:#8ACE00;">
             <p class="post-title" style="color:#FF007F;">Sur : {{.PostTitle}}</p>
+
             <p class="post-content">{{.Content}}</p>
             <span class="post-date">{{.PublicationDate}}</span>
             <form action="/delete-comment" method="POST">
@@ -79,6 +100,7 @@
                 <button class="btn-pink" onclick="return confirm('Supprimer ce commentaire ?')">🗑️ Supprimer</button>
             </form>
         </div>
+
         {{else}}
         <p class="no-post">Aucun commentaire pour l'instant.</p>
         {{end}}
@@ -97,6 +119,5 @@
         {{end}}
     </div>
     {{end}}
-
 </body>
 </html>
