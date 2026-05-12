@@ -30,6 +30,9 @@ func Server() {
 	http.HandleFunc("/like", LikePost)
 	http.HandleFunc("/comment", CommentPost)
 	http.HandleFunc("/comment/delete", DeleteComment)
+	http.HandleFunc("/update-post", UpdatePost)
+	http.HandleFunc("/delete-post", DeletePost)
+	http.HandleFunc("/edit-post", EditPost)
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 

@@ -83,8 +83,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 			if avatar != nil {
 				p.Avatar = *avatar
-			} /*else {
-			p.avatar = "static.png"}*/
+			} else {
+				p.Avatar = "/static/default.png"
+			}
 
 			posts = append(posts, p)
 		}
@@ -174,17 +175,42 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	id := getUser(r)
 	if id == 0 {
-		http.Redirect(w, r, "login", http.StatusSeeOther)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
+	post_id := r.FormValue("post_id")
 	title := r.FormValue("title")
 	content := r.FormValue("content")
-	publication_date := r.FormValue("publication_date")
+	data := map[string]interface{}{}
+	fmt.Println("user_id:", id, "post_id:", post_id, "title:", title, "content:", content)
 
 	if title != "" {
+		result, err := db.Exec("UPDATE posts SET title = ? WHERE id = ? AND user_id = ?", title, post_id, id)
+		fmt.Println("title update:", result, err)
 	}
 	if content != "" {
+		result, err := db.Exec("UPDATE posts SET content = ? WHERE id = ? AND user_id = ?", content, post_id, id)
+		fmt.Println("content update:", result, err)
+
+		data["Success"] = "Post modifié"
+	} /*
+		if publication_date != "" {
+			db.Exec("UPDATE posts SET puplication_date = ? WHERE id = ? AND user_id = ?", publication_date, id, post_id)
+			data["Success"] = "Post modifié"
+		}*/
+
+	http.Redirect(w, r, "/profil", http.StatusSeeOther)
+
+}
+
+func DeletePost(w http.ResponseWriter, r *http.Request) {
+	id := getUser(r)
+	if id == 0 {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
 	}
-	if publication_date != "" {
-	}
+	post_id := r.FormValue("post_id")
+	db.Exec("DELETE FROM posts WHERE id = ? AND user_id = ?", post_id, id)
+	http.Redirect(w, r, "/profil", http.StatusSeeOther)
+
 }
