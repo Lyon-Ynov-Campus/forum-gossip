@@ -7,6 +7,11 @@
     vertical-align: middle;
     margin-right: 8px;
 }
+.posts-title {
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+}
 
 .post-card {
   display: flex;
@@ -78,4 +83,14 @@
   height: 4px;
   background: black;
   margin-top: 8px;
+}
+
+.btn-modifier {
+    padding: 12px 32px;
+    border-radius: 999px;
+    background: #8ACE00;
+    border: 4px solid black;
+    font-family: "Arial Black", Arial, sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
 }

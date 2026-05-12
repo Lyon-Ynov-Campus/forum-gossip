@@ -52,6 +52,11 @@ func Register(w http.ResponseWriter, r *http.Request) {
 				data.Error["Email"] = "L'email n'est pas valide"
 			}
 		}
+		if Avatar != "" {
+			data.Values["Avatar"] = Avatar
+		} else {
+			data.Values["Avatar"] = "/static/default.png"
+		}
 		if len(password) < 8 {
 			data.Error["PasswordLength"] = "Le mot de passe est trop court"
 		} else {

@@ -62,11 +62,74 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 		posts = append(posts, p)
 	}
 
+	tab := r.URL.Query().Get("tab")
+	if tab == "" {
+		tab = "Publications"
+	}
+
+	type Comment struct {
+		ID              int
+		PostTitle       string
+		Content         string
+		PublicationDate string
+	}
+
+	var comments []Comment
+
+	if tab == "Commentaires" {
+		rows2, err := db.Query(`
+		SELECT comments.id, posts.title, comments.content, comments.publication_date
+		FROM comments
+		JOIN posts ON comments.post_id = posts.id
+		WHERE comments.user_id = ?
+		ORDER BY comments.publication_date DESC
+	`, id)
+		if err != nil {
+			http.Error(w, "Erreur récupération commentaires", 500)
+			return
+		}
+		defer rows2.Close()
+		for rows2.Next() {
+			var c Comment
+			rows2.Scan(&c.ID, &c.PostTitle, &c.Content, &c.PublicationDate)
+			comments = append(comments, c)
+		}
+	}
+
+	type Like struct {
+		ID      int
+		Title   string
+		Content string
+	}
+	rows3, err := db.Query(`
+		SELECT posts.id, posts.title, posts.content
+		FROM likes
+		JOIN posts ON likes.post_id = posts.id
+		WHERE likes.user_id = ?
+		ORDER BY posts.publication_date DESC
+	`, id)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Erreur récupération likes", 500)
+		return
+	}
+	defer rows3.Close()
+
+	var likes []Like
+	for rows.Next() {
+		var l Like
+		rows.Scan(&l.ID, &l.Title, &l.Content)
+		likes = append(likes, l)
+	}
+
 	data := map[string]interface{}{
-		"Username": username,
-		"Email":    email,
-		"Avatar":   avatar,
-		"Posts":    posts,
+		"Username":  username,
+		"Email":     email,
+		"Avatar":    avatar,
+		"Posts":     posts,
+		"ActiveTab": tab,
+		"Comments":  comments,
+		"Likes":     likes,
 	}
 
 	tmpl, err := template.ParseFiles("templates/pageUtilisateur.html")
