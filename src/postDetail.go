@@ -31,6 +31,7 @@ func PostDetail(w http.ResponseWriter, r *http.Request) {
 		ID       int
 		Username string
 		Content  string
+		Date     string
 		IsOwner  bool
 	}
 
@@ -63,11 +64,11 @@ func PostDetail(w http.ResponseWriter, r *http.Request) {
 	}
 
 	rows, err := db.Query(`
-		SELECT c.id, u.username, c.content, c.user_id
-		FROM comments c
-		JOIN users u ON c.user_id = u.id
-		WHERE c.post_id = ?
-		ORDER BY c.publication_date ASC
+	SELECT c.id, u.username, c.content, c.publication_date, c.user_id
+	FROM comments c
+	JOIN users u ON c.user_id = u.id
+	WHERE c.post_id = ?
+	ORDER BY c.publication_date ASC
 	`, postID)
 	if err != nil {
 		http.Error(w, "Erreur commentaires", 500)
@@ -79,7 +80,7 @@ func PostDetail(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		var c Comment
 		var commentUserID int
-		rows.Scan(&c.ID, &c.Username, &c.Content, &commentUserID)
+		rows.Scan(&c.ID, &c.Username, &c.Content, &c.Date, &commentUserID)
 		c.IsOwner = commentUserID == userID
 		comments = append(comments, c)
 	}

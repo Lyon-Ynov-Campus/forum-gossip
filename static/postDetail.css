@@ -221,3 +221,10 @@ body {
     color: #555;
     font-size: 15px;
 }
+
+.date {
+    display: block;
+    font-size: 12px;
+    color: #999;
+    margin-top: 2px;
+}

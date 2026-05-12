@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,33 +7,89 @@
     <title>Recherche Goss'ip Tea</title>
 </head>
 <body>
+
     <div class="topbar">
         <div class="logo">GOSS'IP TEA</div>
         <a href="/" class="btn-retour">Retour</a>
     </div>
-    <form action="/search" method="GET" class="search-form">
+
+    <div class="search-type">
+        <a href="/search?type=users&q={{.Query}}">
+            <button>Utilisateurs</button>
+        </a>
+
+        <a href="/search?type=posts&q={{.Query}}">
+            <button>Posts</button>
+        </a>
+    </div>
+
+    <form action="/search" method="GET" class="filters">
+        <input type="hidden" name="type" value="{{.Type}}">
         <div class="search-bar">
             <span class="search-icon">Recherche</span>
-            <input type="text" name="q" value="{{.Query}}" placeholder="Recherches profils..." autofocus>
+            <input type="text" name="q" value="{{.Query}}" placeholder="Recherche..." autofocus>
         </div>
     </form>
+
+    {{if eq .Type "posts"}}
+    <form action="/search" method="GET" style="margin-bottom:20px;">
+        <input type="hidden" name="type" value="posts">
+        <input type="hidden" name="q" value="{{.Query}}">
+        <select name="sort">
+            <option value="date">Date</option>
+            <option value="likes">Likes</option>
+            <option value="comments">Commentaires</option>
+        </select>
+
+        <select name="order">
+            <option value="desc">Décroissant</option>
+            <option value="asc">Croissant</option>
+        </select>
+
+        <button type="submit">Filtrer</button>
+    </form>
+    {{end}}
     <div class="results">
-        {{if .Users}}
-           {{range .Users}}
-            <a href="/user/{{.Username}}" class="profile-card">
-                <img src="{{.Avatar}}" alt="avatar">
-                <div class="profile-info">
-                    <span class="profile-name">{{.Username}}</span>
-                    <div class="profile-stats">
-                        <span>{{.NbPosts}} posts</span>
-                        <span>{{.NbLikes}} likes</span>
-                        <span>{{.NbComments}} commentaires</span>
+        {{if eq .Type "users"}}
+            {{if .Users}}
+                {{range .Users}}
+                <a href="/user/{{.Username}}" class="profile-card">
+                    <img src="{{.Avatar}}" alt="avatar">
+                    <div class="profile-info">
+                        <span class="profile-name">{{.Username}}</span>
+                        <div class="profile-stats">
+                            <span>{{.NbPosts}} posts</span>
+                            <span>{{.NbLikes}} likes</span>
+                            <span>{{.NbComments}} commentaires</span>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+                {{end}}
+            {{else}}
+                <p class="no-result">Aucun utilisateur trouvé</p>
             {{end}}
-        {{else}}
-            <p class="no-result">Aucun profil trouvé{{if .Query}} pour "{{.Query}}"{{end}}</p>
+        {{end}}
+        {{if eq .Type "posts"}}
+            {{if .Posts}}
+                {{range .Posts}}
+                <a href="/post/{{.ID}}" class="profile-card">
+                    <img src="{{.Avatar}}" alt="avatar">
+                    <div class="profile-info">
+                        <span class="profile-name">
+                            {{.Title}}
+                        </span>
+                        <p>{{.Content}}</p>
+                        <div class="profile-stats">
+                            <span>@{{.Username}}</span>
+                            <span>{{.NbLikes}} likes</span>
+                            <span>{{.NbComments}} commentaires</span>
+                        </div>
+                    </div>
+                </a>
+                {{end}}
+            {{else}}
+                <p class="no-result">Aucun post trouvé</p>
+            {{end}}
         {{end}}
     </div>
 </body>
