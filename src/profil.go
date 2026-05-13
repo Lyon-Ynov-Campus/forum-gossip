@@ -102,7 +102,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 		Content string
 	}
 	rows3, err := db.Query(`
-		SELECT posts.id, posts.title, posts.content
+		SELECT likes.id, posts.title, posts.content
 		FROM likes
 		JOIN posts ON likes.post_id = posts.id
 		WHERE likes.user_id = ?
@@ -116,9 +116,9 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	defer rows3.Close()
 
 	var likes []Like
-	for rows.Next() {
+	for rows3.Next() {
 		var l Like
-		rows.Scan(&l.ID, &l.Title, &l.Content)
+		rows3.Scan(&l.ID, &l.Title, &l.Content)
 		likes = append(likes, l)
 	}
 

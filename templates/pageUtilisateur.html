@@ -97,7 +97,7 @@
             <span class="post-date">{{.PublicationDate}}</span>
             <form action="/delete-comment" method="POST">
                 <input type="hidden" name="comment_id" value="{{.ID}}">
-                <button class="btn-pink" onclick="return confirm('Supprimer ce commentaire ?')">🗑️ Supprimer</button>
+                <button class="btn-pink" onclick="return confirm('Supprimer ce commentaire ?')">Supprimer</button>
             </form>
         </div>
 
@@ -108,7 +108,7 @@
 
     {{else if eq .ActiveTab "Likes"}}
     <div class="mes-posts">
-        <h3 class="section-title">Mes likes ({{len .Likes}})</h3>
+        <h3 class="section-title">Mes posts likés ({{len .Likes}})</h3>
         {{range .Likes}}
         <div class="post-card">
             <h4 class="post-title">{{.Title}}</h4>
