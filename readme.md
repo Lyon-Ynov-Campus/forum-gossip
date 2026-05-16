@@ -35,8 +35,12 @@ Fonctionnalités :
     - bcrypt (hachage des mots de passe)
     - JavaScript (fetch api)
 
-Pour lancer le projet :
+Pour lancer le projet en local:
 git clone https://github.com/Lyon-Ynov-Campus/forum-gossip.git
 cd forum-gossip 
 go run .
 Puis il faut aller sur : http://localhost:8080
+
+
+Nous avons déployer notre site avec azure, nous pouvons le retrouver sur le lien suivant : 
+https://forum-gossip-jar-bubrgdgab5fygngc.francecentral-01.azurewebsites.net
