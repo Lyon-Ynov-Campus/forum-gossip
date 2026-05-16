@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"os"
 )
 
 var db *sql.DB
@@ -33,9 +34,17 @@ func Server() {
 	http.HandleFunc("/update-post", UpdatePost)
 	http.HandleFunc("/delete-post", DeletePost)
 	http.HandleFunc("/edit-post", EditPost)
+
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	fmt.Println("Serveur lancé sur http://localhost:8080")
-	http.ListenAndServe(":8080", nil)
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "8080"
+	}
+
+	fmt.Println("Serveur lancé sur le port", port)
+
+	http.ListenAndServe(":"+port, nil)
 }
