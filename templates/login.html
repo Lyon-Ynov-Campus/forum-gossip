@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="/static/login.css">
+</head>
+<body>
+
+    <h1 class="logo">GOSS'IP TEA</h1>
+
+    <div class="card">
+
+        <div class="card-title">
+            <span class="icon"><span>->]</span></span>
+            <h2>CONNEXION</h2>
+        </div>
+        {{if .Error}}
+            <p class="error">{{.Error}}</p>
+        {{end}}
+        <form action="/login" method="POST">
+            <input type="text" name="email" placeholder="Username or email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">ENTER THE TEA ZONE</button>
+        </form>
+
+        <a href="/register" class="create">Create Account</a>
+        <a href="/forgot">Mot de passe oublié ?</a>
+
+    </div>
+</body>
+</html>

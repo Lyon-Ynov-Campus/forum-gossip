@@ -1,0 +1,249 @@
+package src
+
+import (
+	"database/sql"
+	"fmt"
+	"html/template"
+	"log"
+	"net/http"
+
+	"golang.org/x/crypto/bcrypt"
+)
+
+func Home(w http.ResponseWriter, r *http.Request) {
+
+	id := getUser(r)
+	msg := r.URL.Query().Get("msg")
+	tmpl, err := template.ParseFiles("templates/pageAccueil.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+	var myAvatar string
+	if id != 0 {
+		var avatar *string
+		db.QueryRow("SELECT avatar FROM users WHERE id = ?", id).Scan(&avatar)
+		if avatar != nil {
+			myAvatar = *avatar
+		}
+	}
+
+	rows, err := db.Query("SELECT username, avatar FROM users")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	type User struct {
+		Username string
+		Avatar   string
+	}
+	var users []User
+
+	for rows.Next() {
+		var u User
+		var avatar *string
+		rows.Scan(&u.Username, &avatar)
+		if avatar != nil {
+			u.Avatar = *avatar
+		}
+		users = append(users, u)
+	}
+	type Post struct {
+		Id               int
+		Title            string
+		Content          string
+		Username         string
+		Avatar           string
+		NbComments       int
+		NbLikes          int
+		Publication_date string
+	}
+
+	var posts []Post
+	rows2, err := db.Query(`
+    SELECT posts.id, posts.title, posts.content, posts.publication_date, users.username, users.avatar,
+        COUNT(DISTINCT comments.id) AS nb_comments,
+        COUNT(DISTINCT likes.id) AS nb_likes
+    FROM posts
+    JOIN users ON posts.user_id = users.id
+    LEFT JOIN comments ON posts.id = comments.post_id
+    LEFT JOIN likes ON posts.id = likes.post_id
+    GROUP BY posts.id
+    ORDER BY posts.publication_date DESC
+	`)
+	if err != nil {
+		fmt.Println("erreur ajout post", err)
+	}
+	if err == nil {
+		defer rows2.Close()
+		for rows2.Next() {
+			var p Post
+			var avatar *string
+			rows2.Scan(&p.Id, &p.Title, &p.Content, &p.Publication_date, &p.Username, &avatar, &p.NbComments, &p.NbLikes)
+
+			if avatar != nil {
+				p.Avatar = *avatar
+			} else {
+				p.Avatar = "/static/default.png"
+			}
+
+			posts = append(posts, p)
+		}
+
+	}
+	data := map[string]interface{}{
+		"UserID":   id,
+		"Message":  msg,
+		"Users":    users,
+		"Posts":    posts,
+		"MyAvatar": myAvatar,
+	}
+	tmpl.Execute(w, data)
+}
+
+func DeleteAccount(w http.ResponseWriter, r *http.Request) {
+	id := getUser(r)
+	if id == 0 {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+	db.Exec("DELETE FROM users WHERE id = ?", id)
+	removeSession(w, r)
+	http.Redirect(w, r, "/?msg=deleted", http.StatusSeeOther)
+}
+
+func UpdateUser(w http.ResponseWriter, r *http.Request) {
+	id := getUser(r)
+	if id == 0 {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+
+	username := r.FormValue("username")
+	email := r.FormValue("email")
+	password := r.FormValue("password")
+	avatar := r.FormValue("avatar")
+	data := map[string]interface{}{}
+	data["ActiveTab"] = "Modifier"
+	message := ""
+
+	if username != "" {
+		_, err := db.Exec("UPDATE users SET username = ? WHERE id = ?", username, id)
+		if err != nil {
+			fmt.Println("Erreur username :", err)
+			data["Error"] = "Erreur changement username"
+		} else {
+			message = "Profil modifié"
+		}
+	}
+
+	if email != "" {
+		_, err := db.Exec("UPDATE users SET email = ? WHERE id = ?", email, id)
+		if err != nil {
+			fmt.Println("Erreur email :", err)
+			data["Error"] = "Erreur changement email"
+		} else {
+			message = "Profil modifié"
+		}
+	}
+
+	if avatar != "" {
+		_, err := db.Exec("UPDATE users SET avatar = ? WHERE id = ?", avatar, id)
+		if err != nil {
+			fmt.Println("Erreur avatar :", err)
+			data["Error"] = "Erreur changement avatar"
+		} else {
+			message = "Profil modifié"
+		}
+	}
+	if password != "" {
+		ok, msg := isValidPassword(password)
+
+		if !ok {
+			data["Error"] = msg
+		} else {
+			hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+			_, err := db.Exec("UPDATE users SET password = ? WHERE id = ?", string(hash), id)
+			if err != nil {
+				fmt.Println("Erreur password :", err)
+				data["Error"] = "Erreur changement password"
+			} else {
+				message = "Mot de passe modifié"
+			}
+		}
+	}
+
+	if message != "" {
+		data["Success"] = message
+	}
+	var user struct {
+		Username string
+		Email    string
+		Avatar   string
+	}
+
+	var avatarNull sql.NullString
+
+	err := db.QueryRow("SELECT username, email, avatar FROM users WHERE id = ?", id).Scan(&user.Username, &user.Email, &avatarNull)
+	if err != nil {
+		fmt.Println("Erreur SELECT :", err)
+	}
+	if avatarNull.Valid {
+		user.Avatar = avatarNull.String
+	} else {
+		user.Avatar = "/static/default.png"
+	}
+	data["Username"] = user.Username
+	data["Email"] = user.Email
+	data["Avatar"] = user.Avatar
+
+	tmpl, err := template.ParseFiles("templates/pageUtilisateur.html")
+	if err != nil {
+		http.Error(w, "Erreur template", 500)
+		return
+	}
+	tmpl.Execute(w, data)
+}
+
+func UpdatePost(w http.ResponseWriter, r *http.Request) {
+	id := getUser(r)
+	if id == 0 {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+	post_id := r.FormValue("post_id")
+	title := r.FormValue("title")
+	content := r.FormValue("content")
+	data := map[string]interface{}{}
+	fmt.Println("user_id:", id, "post_id:", post_id, "title:", title, "content:", content)
+
+	if title != "" {
+		result, err := db.Exec("UPDATE posts SET title = ? WHERE id = ? AND user_id = ?", title, post_id, id)
+		fmt.Println("title update:", result, err)
+	}
+	if content != "" {
+		result, err := db.Exec("UPDATE posts SET content = ? WHERE id = ? AND user_id = ?", content, post_id, id)
+		fmt.Println("content update:", result, err)
+
+		data["Success"] = "Post modifié"
+	} /*
+		if publication_date != "" {
+			db.Exec("UPDATE posts SET puplication_date = ? WHERE id = ? AND user_id = ?", publication_date, id, post_id)
+			data["Success"] = "Post modifié"
+		}*/
+
+	http.Redirect(w, r, "/profil", http.StatusSeeOther)
+
+}
+
+func DeletePost(w http.ResponseWriter, r *http.Request) {
+	id := getUser(r)
+	if id == 0 {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+	post_id := r.FormValue("post_id")
+	db.Exec("DELETE FROM posts WHERE id = ? AND user_id = ?", post_id, id)
+	http.Redirect(w, r, "/profil", http.StatusSeeOther)
+
+}

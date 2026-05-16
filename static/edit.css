@@ -1,0 +1,87 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 48px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+h2 {
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 2rem;
+    color: #8ACE00;
+    margin-bottom: 32px;
+}
+
+.profile-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.field-row input {
+    width: 100%;
+    height: 64px;
+    background: white;
+    border: 4px solid black;
+    padding: 0 24px;
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 1rem;
+    color: black;
+    outline: none;
+}
+
+.edit-textarea {
+    width: 100%;
+    min-height: 200px;
+    background: white;
+    border: 4px solid black;
+    padding: 16px 24px;
+    font-size: 1rem;
+    color: black;
+    resize: vertical;
+    outline: none;
+    font-family: Arial, sans-serif;
+}
+
+.post-btns {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.btn-save {
+    padding: 14px 40px;
+    border-radius: 999px;
+    background: #8ACE00;
+    border: 4px solid black;
+    color: black;
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-save:hover { background: #FF007F; color: white; }
+
+.btn-cancel {
+    padding: 14px 40px;
+    border-radius: 999px;
+    background: white;
+    border: 4px solid black;
+    color: black;
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-cancel:hover { background: black; color: white; }
