@@ -44,3 +44,4 @@ Puis il faut aller sur : http://localhost:8080
 
 Nous avons déployer notre site avec azure, nous pouvons le retrouver sur le lien suivant : 
 https://forum-gossip-jar-bubrgdgab5fygngc.francecentral-01.azurewebsites.net
+ 
